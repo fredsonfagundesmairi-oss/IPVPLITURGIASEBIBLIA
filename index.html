@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Montador de Liturgia e Bíblia Integrada</title>
-    <!-- Tailwind CSS para estilização moderna e limpa -->
+    <title>Montador de Liturgia e Bíblia Integrada - IPVP</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @media print {
@@ -18,369 +17,183 @@
 </head>
 <body class="bg-slate-50 text-slate-800 font-sans min-h-screen flex flex-col">
 
-    <!-- Header -->
+    <!-- Cabeçalho -->
     <header class="bg-indigo-700 text-white shadow-md no-print">
-        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
-            <h1 class="text-2xl font-bold flex items-center gap-2">
-                <span>📖</span> Montador de Liturgia & Bíblia ARA
-            </h1>
-            <p class="text-indigo-200 text-sm mt-1 md:mt-0">Monte sua liturgia, consulte e intercale textos e hinos com facilidade.</p>
+        <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
+            <div>
+                <h1 class="text-2xl font-bold flex items-center gap-2">
+                    ⛪ Sistema de Liturgias e Bíblia - IPVP
+                </h1>
+                <p class="text-indigo-200 text-sm">Igreja Presbiteriana de Várzea do Poço - BA</p>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="carregarLiturgiaPadrao()" class="bg-indigo-600 hover:bg-indigo-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow">
+                    Carregar Culto Padrão
+                </button>
+                <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-500 text-white px-4 py-2 rounded-lg text-sm font-medium transition shadow flex items-center gap-2">
+                    🖨️ Imprimir / PDF
+                </button>
+            </div>
         </div>
     </header>
 
-    <!-- Main Container -->
-    <main class="max-w-7xl mx-auto px-4 py-6 flex-grow w-full grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-        <!-- Coluna Esquerda: Leitor Bíblico e Comparador -->
-        <section class="lg:col-span-1 bg-white rounded-xl shadow-sm border border-slate-200 p-5 flex flex-col h-[75vh] no-print">
-            <h2 class="text-lg font-semibold text-indigo-700 mb-3 flex items-center justify-between">
-                <span>Pesquisa Bíblica</span>
-                <span class="text-xs bg-indigo-100 text-indigo-800 px-2 py-1 rounded">ARA Padrão</span>
-            </h2>
-
-            <div class="space-y-3 mb-4">
-                <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Versão Principal</label>
-                    <select id="primaryVersion" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500">
-                        <option value="ARA" selected>Almeida Revista e Atualizada (ARA)</option>
-                        <option value="ACF">Almeida Corrigida Fiel (ACF)</option>
-                        <option value="NVI">Nova Versão Internacional (NVI)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Comparar com (Opcional)</label>
-                    <select id="compareVersion" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500">
-                        <option value="">Nenhuma (Apenas Principal)</option>
-                        <option value="ACF">Almeida Corrigida Fiel (ACF)</option>
-                        <option value="NVI">Nova Versão Internacional (NVI)</option>
-                    </select>
-                </div>
-                <div>
-                    <label class="block text-xs font-medium text-slate-600 mb-1">Selecione o Livro / Passagem</label>
-                    <select id="biblePassageSelect" class="w-full text-sm border border-slate-300 rounded-lg p-2 focus:ring-2 focus:ring-indigo-500">
-                        <option value="Gn1">Gênesis 1 (Criação)</option>
-                        <option value="Gn2">Gênesis 2 (O Éden)</option>
-                        <option value="Gn3">Gênesis 3 (A Queda)</option>
-                    </select>
-                </div>
-                <button onclick="loadBibleText()" class="w-full bg-indigo-600 hover:bg-indigo-700 text-white text-sm font-medium py-2 rounded-lg transition shadow">
-                    Exibir / Intercalar Texto
-                </button>
-            </div>
-
-            <!-- Caixa de Exibição Bíblica -->
-            <div id="bibleDisplayContainer" class="flex-grow overflow-y-auto border border-slate-200 rounded-lg p-3 bg-slate-50 text-sm space-y-2">
-                <p class="text-slate-400 text-center italic mt-10">Selecione uma passagem acima para exibir com formatação natural e abreviações (ex: Gn 1.1).</p>
-            </div>
-        </section>
-
-        <!-- Coluna Direita: Montador de Liturgia -->
-        <section class="lg:col-span-2 bg-white rounded-xl shadow-sm border border-slate-200 p-6 flex flex-col">
-            <div class="flex justify-between items-center mb-4 no-print border-b pb-3">
-                <h2 class="text-xl font-bold text-slate-800">Monte sua Liturgia</h2>
-                <div class="flex gap-2">
-                    <button onclick="addCustomSection()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1">
-                        ➕ Incluir Novo Bloco
-                    </button>
-                    <button onclick="openPrintPreview()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-semibold px-3 py-2 rounded-lg transition flex items-center gap-1">
-                        🖨️ Imprimir / PDF
+    <!-- Conteúdo Principal -->
+    <main class="max-w-7xl mx-auto px-4 py-8 flex-grow w-full grid grid-cols-1 lg:grid-cols-3 gap-8">
+        
+        <!-- Coluna Esquerda/Centro: Construtor de Liturgia -->
+        <div class="lg:col-span-2 space-y-6">
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-xl font-bold text-slate-900">Montador de Ordem do Culto</h2>
+                    <button onclick="adicionarBloco()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3 py-1.5 rounded-lg text-sm font-medium transition">
+                        + Adicionar Parte
                     </button>
                 </div>
+
+                <div id="lista-blocos" class="space-y-4">
+                    <!-- Os blocos da liturgia serão injetados aqui via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna Direita: Auxiliar Bíblico e Hinário Rápido -->
+        <div class="space-y-6 no-print">
+            <!-- Consulta Bíblica Rápida -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-3">📖 Consulta Bíblica</h3>
+                <div class="space-y-3">
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Versão</label>
+                        <select id="versao-biblia" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <option value="ARA">Almeida Revista e Atualizada (ARA)</option>
+                            <option value="ACF">Almeida Corrigida Fiel (ACF)</option>
+                            <option value="NVI">Nova Versão Internacional (NVI)</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold text-slate-600 uppercase mb-1">Referência (ex: Salmo 11.1)</label>
+                        <div class="flex gap-2">
+                            <input type="text" id="ref-busca" placeholder="Ex: Efésios 4.17-23" class="w-full border border-slate-300 rounded-lg p-2 text-sm focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                            <button onclick="buscarTextoBiblico()" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-medium">Buscar</button>
+                        </div>
+                    </div>
+                    <div id="resultado-biblia" class="bg-slate-50 p-3 rounded-lg text-sm text-slate-700 min-h-[100px] max-h-[250px] overflow-y-auto border border-slate-200">
+                        Digite uma referência e clique em buscar para exibir o texto...
+                    </div>
+                </div>
             </div>
 
-            <!-- Configurações de Impressão -->
-            <div class="bg-indigo-50 border border-indigo-100 rounded-lg p-3 mb-4 no-print flex flex-wrap items-center justify-between gap-4 text-sm">
-                <span class="font-medium text-indigo-900">Opções de Impressão:</span>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeBibleTexts" checked class="rounded text-indigo-600 focus:ring-indigo-500">
-                    <span class="text-slate-700">Incluir textos bíblicos citados (versão ARA)</span>
-                </label>
-                <label class="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" id="includeHymns" checked class="rounded text-indigo-600 focus:ring-indigo-500">
-                    <span class="text-slate-700">Incluir letras de músicas / hinos</span>
-                </label>
+            <!-- Hinário Presbiteriano / Corinhos -->
+            <div class="bg-white p-6 rounded-xl shadow-sm border border-slate-200">
+                <h3 class="text-lg font-bold text-slate-900 mb-3">🎵 Hinos e Cânticos</h3>
+                <select id="seletor-hinos" onchange="mostrarHino()" class="w-full border border-slate-300 rounded-lg p-2 text-sm mb-3">
+                    <option value="">Selecione um hino ou cântico...</option>
+                    <option value="hino336">Hino 336 - Transformação</option>
+                    <option value="corinho1">Venho Senhor, Minha Vida Oferecer</option>
+                    <option value="corinho2">Vim Para Adorar-te</option>
+                    <option value="corinho3">Rendido Estou</option>
+                    <option value="corinho4">Renova-me</option>
+                </select>
+                <div id="letra-hino" class="bg-slate-50 p-3 rounded-lg text-xs text-slate-700 h-[180px] overflow-y-auto border border-slate-200 whitespace-pre-line">
+                    Selecione um hino acima para visualizar a letra.
+                </div>
             </div>
-
-            <!-- Lista de Partes da Liturgia -->
-            <div id="liturgyBuilder" class="space-y-4 overflow-y-auto flex-grow pr-1">
-                <!-- Os blocos serão gerados dinamicamente via JS -->
-            </div>
-        </section>
+        </div>
 
     </main>
 
-    <!-- Modal de Impressão / PDF Formatado -->
-    <div id="printModal" class="fixed inset-0 bg-black/50 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
-            <div class="bg-slate-800 text-white p-4 flex justify-between items-center no-print">
-                <h3 class="font-bold text-lg">Pré-visualização para Impressão (PDF Formatado)</h3>
-                <div class="flex gap-2">
-                    <button onclick="window.print()" class="bg-indigo-600 hover:bg-indigo-700 px-4 py-1.5 rounded-lg text-sm font-medium transition">Imprimir Agora</button>
-                    <button onclick="closePrintPreview()" class="bg-slate-600 hover:bg-slate-700 px-4 py-1.5 rounded-lg text-sm font-medium transition">Fechar</button>
-                </div>
-            </div>
-            <div id="printPreviewContent" class="p-8 overflow-y-auto bg-white text-slate-800 space-y-6">
-                <!-- Conteúdo formatado para impressão -->
-            </div>
-        </div>
-    </div>
+    <!-- Rodapé -->
+    <footer class="bg-white border-t border-slate-200 py-4 text-center text-xs text-slate-500 no-print">
+        Igreja Presbiteriana de Várzea do Poço (IPVP) • Pastor Fredson Fagundes Cerqueira
+    </footer>
 
-    <!-- Script de Gestão da Liturgia e Bíblia -->
     <script>
-        // Banco de Dados Simulado de Textos Bíblicos (ARA por padrão)
-        const bibleDatabase = {
-            "Gn1": {
-                ref: "Gênesis 1.1-5",
-                ARA: [
-                    { v: "1", text: "No princípio criou Deus os céus e a terra." },
-                    { v: "2", text: "A terra estava sem forma e vazia; havia trevas sobre a face do abismo, e o Espírito de Deus pairava por sobre as águas." },
-                    { v: "3", text: "Disse Deus: Haja luz; e houve luz." },
-                    { v: "4", text: "Viu Deus que a luz era boa; e fez separação entre a luz e as trevas." },
-                    { v: "5", text: "Chamou Deus à luz Dia e às trevas, Noite. Houve tarde e manhã, o primeiro dia." }
-                ],
-                ACF: [
-                    { v: "1", text: "No princípio criou Deus os céus e a terra." },
-                    { v: "2", text: "E a terra era sem forma e vazia; e havia trevas sobre a face do abismo; e o Espírito de Deus se movía sobre a face das águas." },
-                    { v: "3", text: "E disse Deus: Haja luz; e houve luz." },
-                    { v: "4", text: "E viu Deus que a luz era boa; e fez Deus separação entre a luz e as trevas." },
-                    { v: "5", text: "E Deus chamou à luz Dia; e às trevas chamou Noite. E foi a tarde e a manhã, o dia primeiro." }
-                ],
-                NVI: [
-                    { v: "1", text: "No princípio Deus criou os céus e a terra." },
-                    { v: "2", text: "Era a terra sem forma e vazia; trevas cobriam a face do abismo, e o Espírito de Deus se movia sobre a face das águas." },
-                    { v: "3", text: "Disse Deus: 'Haja luz', e houve luz." },
-                    { v: "4", text: "Deus viu que a luz era boa, e separou a luz das trevas." },
-                    { v: "5", text: "Deus chamou à luz dia, e às trevas noite. Passaram-se a tarde e a manhã; esse foi o primeiro dia." }
-                ]
-            },
-            "Gn2": {
-                ref: "Gênesis 2.1-3",
-                ARA: [
-                    { v: "1", text: "Assim pois foram concluídos os céus e a terra e todo o seu exército." },
-                    { v: "2", text: "E havendo Deus terminado no dia sétimo a sua obra, que tinha feito, descansou nesse dia de toda a sua obra que tinha feito." },
-                    { v: "3", text: "E abençoou Deus o dia sétimo e o santificou; porque nele descansou de toda a sua obra que, para isso, Deus criara e fizera." }
-                ],
-                ACF: [
-                    { v: "1", text: "Assim os céus e a terra foram terminados, e todo o exército deles." },
-                    { v: "2", text: "E havendo Deus acabado no dia sétimo a sua obra, que tinha feito, descansou nesse dia de toda a sua obra, que tinha feito." },
-                    { v: "3", text: "E abençoou Deus o dia sétimo e o santificou; porque nele descansou de toda a sua obra que Deus criara e fizera." }
-                ],
-                NVI: [
-                    { v: "1", text: "Assim foram concluídos os céus e a terra, e tudo o neles há." },
-                    { v: "2", text: "No sétimo dia Deus já havia terminado a obra que realizara; nesse dia ele descansou de toda a sua obra." },
-                    { v: "3", text: "Abençoou Deus o sétimo dia e o santificou, porque nele descansou de toda a obra que realizara na criação." }
-                ]
-            },
-            "Gn3": {
-                ref: "Gênesis 3.1-4",
-                ARA: [
-                    { v: "1", text: "Ora, a serpente era o mais astuto de todos os animais do campo que o Senhor Deus tinha feito." },
-                    { v: "2", text: "E disse a mulher: Do fruto das árvores do jardim podemos comer," },
-                    { v: "3", text: "mas do fruto da árvore que está no meio do jardim, disse Deus: Não comereis dele, n'ele tocareis, para que não morrais." },
-                    { v: "4", text: "Então a serpente disse à mulher: Certamente não morrereis." }
-                ],
-                ACF: [
-                    { v: "1", text: "Ora, a serpente era mais astuta que todas as alimárias do campo que o Senhor Deus tinha feito." },
-                    { v: "2", text: "E disse a mulher à serpente: Do fruto das árvores do jardim podemos comer," },
-                    { v: "3", text: "Mas do fruto da árvore que está no meio do jardim, disse Deus: Não comereis dele, nem nele tocareis para que não morrais." },
-                    { v: "4", text: "Então a serpente disse à mulher: Certamente não morrereis." }
-                ],
-                NVI: [
-                    { v: "1", text: "Ora, a serpente era o mais astuto de todos os animais selvagens que o Senhor Deus tinha feito." },
-                    { v: "2", text: "Respondeu a mulher à serpente: 'Podemos comer do fruto das árvores do jardim," },
-                    { v: "3", text: "mas Deus disse: "Não comam do fruto da árvore que está no meio do jardim, nem o toquem; do contrário vocês morrerão".'" },
-                    { v: "4", text: "Disse a serpente à mulher: 'Certamente vocês não morrerão'." }
-                ]
-            }
+        // Banco de dados embutido de hinos e corinhos
+        const hinosDB = {
+            "hino336": "Hino 336 - Transformação\n\n1. Santo Espírito, consolador,\nHabita em meu corazón;\nTransforma a minha vida, Senhor,\nConforme a tua unção.\n\nCoro: Quero ser santo, quero servir,\nCom dedicação e amor;\nTeu evangelho quero cumprir,\nÓ meu bendito Salvador.",
+            "corinho1": "Venho Senhor, Minha Vida Oferecer\n\nVenho Senhor, minha vida oferecer\nComo sacrifício de amor e um louvor\nRetirado do meu ego e do meu eu\nQuero agradar-Te, Senhor!\n\nJesus, a minha vida dou a Ti\nHoje e sempre, até o fim!",
+            "corinho2": "Vim Para Adorar-te\n\nLuz da minha vida, brilhas na escuridão\nAbriu meus olhos, pude ver\nBeleza que me faz adorar-Te\nEsperança da minha vida estás\n\nVim para adorar-Te, vim para prostrar-me\nVim para dizer que és meu Deus...",
+            "corinho3": "Rendido Estou\n\nToma meu coração e faze-o teu\nPois tua presença é o meu prazer\nEm tua santidade quero habitar\nE o teu amor experimentar\n\nE ao teu lado eu quero andar\nPara sempre em teus braços descansar...",
+            "corinho4": "Renova-me\n\nRenova-me, Senhor Jesus\nJá não quero ser igual\nRenova-me, Senhor Jesus\nPõe em me teu coração\n\nPorque tudo o que há dentro de mim\nPrecisa ser mudado, Senhor\nPorque tudo o que há dentro do meu coração\nPrecisa mais de Ti."
         };
 
-        // Estrutura Inicial da Liturgia com os 6 campos obrigatórios + opção customizável
-        let liturgySections = [
-            { id: 1, title: "1. EXALTAÇÃO", active: true, items: [{ type: "Música / Hino", content: "A Bênção - Gabriel Guedes" }, { type: "Leitura Bíblica", content: "Gn 1.1-5" }] },
-            { id: 2, title: "2. CONTRIÇÃO", active: true, items: [{ type: "Oração", content: "Oração de confissão silenciosa" }] },
-            { id: 3, title: "3. ADORAÇÃO", active: true, items: [{ type: "Música / Hino", content: "Quão Grande É O Meu Deus" }] },
-            { id: 4, title: "4. GRATIDÃO", active: true, items: [{ type: "Música / Hino", content: "Te Agradeço" }] },
-            { id: 5, title: "5. EXPOSIÇÃO BÍBLICA", active: true, items: [{ type: "Leitura Bíblica", content: "Gn 2.1-3" }, { type: "Mensagem", content: "Pregador Convidado" }] },
-            { id: 6, title: "6. ENCERRAMENTO", active: true, items: [{ type: "Música / Hino", content: "A Bênção" }, { type: "Bênção Apostólica", content: "Pastor Titular" }] }
+        function mostrarHino() {
+            const chave = document.getElementById('seletor-hinos').value;
+            const container = document.getElementById('letra-hino');
+            if (hinosDB[chave]) {
+                container.innerText = hinosDB[chave];
+            } else {
+                container.innerText = "Selecione um hino acima para visualizar a letra.";
+            }
+        }
+
+        // Modelo de Liturgia Padrão da IPVP
+        let blocosLiturgia = [
+            { titulo: "1. CHAMADA AO CULTO", texto: "Texto Bíblico: Salmo 11.1\nCântico: Venho Senhor, Minha Vida Oferecer" },
+            { titulo: "2. EXALTAÇÃO – A IGREJA EM PÉ", texto: "Texto Bíblico: Salmo 111 – JUNTOS\nOração de exaltação\nHino: 336 - Transformação" },
+            { titulo: "3. CONTRIÇÃO – A IGREJA SENTADA", texto: "Texto Bíblico: Efésios 4.17-23 - LITURGO\nOração de Confissão silenciosa\nPalavra da Graça: Efésios 4.23\nOração de Gratidão audível" },
+            { titulo: "4. ADORAÇÃO E GRATIDÃO – A IGREJA EM PÉ", texto: "Texto Bíblico: – TODOS EM PÉ\n1. Vim Para Adorar-te\n2. Rendido Estou" },
+            { titulo: "5. EDIFICAÇÃO", texto: "Exposição da Palavra\nMúsica: Renova-me" },
+            { titulo: "6. AVISOS E BENÇÃO", texto: "Não haverá Reunião de Oração na quinta, nem programação no domingo." }
         ];
 
-        function renderLiturgy() {
-            const container = document.getElementById("liturgyBuilder");
-            container.innerHTML = "";
-
-            liturgySections.forEach((sec, idx) => {
-                const div = document.createElement("div");
-                div.className = `border rounded-xl p-4 bg-slate-50 transition ${sec.active ? 'border-indigo-200' : 'border-slate-200 opacity-50'}`;
-                
-                div.innerHTML = `
-                    <div class="flex items-center justify-between mb-3">
-                        <div class="flex items-center gap-3">
-                            <input type="checkbox" ${sec.active ? 'checked' : ''} onchange="toggleSection(${sec.id})" class="w-4 h-4 text-indigo-600 rounded">
-                            <input type="text" value="${sec.title}" onchange="updateSectionTitle(${sec.id}, this.value)" class="font-bold text-indigo-900 bg-transparent border-b border-dashed border-indigo-300 focus:outline-none focus:border-indigo-600">
+        function renderizarLiturgia() {
+            const container = document.getElementById('lista-blocos');
+            container.innerHTML = '';
+            blocosLiturgia.forEach((bloco, index) => {
+                container.innerHTML += `
+                    <div class="bg-slate-50 border border-slate-200 rounded-lg p-4 space-y-2">
+                        <div class="flex justify-between items-center">
+                            <input type="text" value="${bloco.titulo}" onchange="atualizarBloco(${index}, 'titulo', this.value)" class="font-bold text-slate-800 bg-transparent border-b border-transparent hover:border-slate-300 focus:border-indigo-500 focus:outline-none w-full">
+                            <button onclick="removerBloco(${index})" class="text-red-500 hover:text-red-700 text-xs font-semibold ml-2 no-print">Remover</button>
                         </div>
-                        <button onclick="removeSection(${sec.id})" class="text-rose-500 hover:text-rose-700 text-xs font-semibold">Excluir Bloco</button>
-                    </div>
-                    <div class="space-y-2 pl-7">
-                        <div id="items-${sec.id}" class="space-y-2">
-                            ${sec.items.map((item, i) => `
-                                <div class="flex gap-2 items-center">
-                                    <input type="text" value="${item.type}" onchange="updateItemType(${sec.id}, ${i}, this.value)" class="w-1/3 text-xs bg-white border border-slate-300 rounded p-1.5 font-medium text-slate-700">
-                                    <input type="text" value="${item.content}" onchange="updateItemContent(${sec.id}, ${i}, this.value)" class="w-2/3 text-xs bg-white border border-slate-300 rounded p-1.5 text-slate-600" placeholder="Insira o hino, leitura ou detalhe...">
-                                    <button onclick="removeItem(${sec.id}, ${i})" class="text-slate-400 hover:text-rose-600 font-bold px-1">×</button>
-                                </div>
-                            `).join('')}
-                        </div>
-                        <button onclick="addItem(${sec.id})" class="text-xs text-indigo-600 hover:text-indigo-800 font-medium mt-1 inline-block">+ Adicionar elemento neste momento</button>
+                        <textarea rows="3" onchange="atualizarBloco(${index}, 'texto', this.value)" class="w-full border border-slate-300 rounded-lg p-2 text-sm bg-white focus:ring-2 focus:ring-indigo-500 focus:outline-none">${bloco.texto}</textarea>
                     </div>
                 `;
-                container.appendChild(div);
             });
         }
 
-        function toggleSection(id) {
-            const sec = liturgySections.find(s => s.id === id);
-            if (sec) sec.active = !sec.active;
-            renderLiturgy();
+        function atualizarBloco(index, campo, valor) {
+            blocosLiturgia[index][campo] = valor;
         }
 
-        function updateSectionTitle(id, val) {
-            const sec = liturgySections.find(s => s.id === id);
-            if (sec) sec.title = val;
+        function adicionarBloco() {
+            blocosLiturgia.push({ titulo: "NOVO ITEM DA LITURGIA", texto: "Descrição ou texto bíblico..." });
+            renderizarLiturgia();
         }
 
-        function updateItemType(secId, itemIdx, val) {
-            liturgySections.find(s => s.id === secId).items[itemIdx].type = val;
+        function removerBloco(index) {
+            blocosLiturgia.splice(index, 1);
+            renderizarLiturgia();
         }
 
-        function updateItemContent(secId, itemIdx, val) {
-            liturgySections.find(s => s.id === secId).items[itemIdx].content = val;
+        function carregarLiturgiaPadrao() {
+            blocosLiturgia = [
+                { titulo: "1. CHAMADA AO CULTO", texto: "Texto Bíblico: Salmo 11.1\nCântico: Venho Senhor, Minha Vida Oferecer" },
+                { titulo: "2. EXALTAÇÃO – A IGREJA EM PÉ", texto: "Texto Bíblico: Salmo 111 – JUNTOS\nOração de exaltação\nHino: 336 - Transformação" },
+                { titulo: "3. CONTRIÇÃO – A IGREJA SENTADA", texto: "Texto Bíblico: Efésios 4.17-23 - LITURGO\nOração de Confissão silenciosa\nPalavra da Graça: Efésios 4.23\nOração de Gratidão audível" },
+                { titulo: "4. ADORAÇÃO E GRATIDÃO – A IGREJA EM PÉ", texto: "Texto Bíblico: – TODOS EM PÉ\n1. Vim Para Adorar-te\n2. Rendido Estou" },
+                { titulo: "5. EDIFICAÇÃO", texto: "Exposição da Palavra\nMúsica: Renova-me" },
+                { titulo: "6. AVISOS E BENÇÃO", texto: "Não haverá Reunião de Oração na quinta, nem programação no domingo." }
+            ];
+            renderizarLiturgia();
         }
 
-        function addItem(secId) {
-            liturgySections.find(s => s.id === secId).items.push({ type: "Música / Hino", content: "Novo Hino ou Leitura" });
-            renderLiturgy();
-        }
-
-        function removeItem(secId, itemIdx) {
-            liturgySections.find(s => s.id === secId).items.splice(itemIdx, 1);
-            renderLiturgy();
-        }
-
-        function addCustomSection() {
-            const newId = liturgySections.length > 0 ? Math.max(...liturgySections.map(s => s.id)) + 1 : 1;
-            liturgySections.push({ id: newId, title: `${liturgySections.length + 1}. NOVO MOMENTO`, active: true, items: [{ type: "Oração", content: "Oração pastoral" }] });
-            renderLiturgy();
-        }
-
-        function removeSection(id) {
-            liturgySections = liturgySections.filter(s => s.id !== id);
-            renderLiturgy();
-        }
-
-        // Carrega e exibe a Bíblia com suporte a ARA principal, comparação e ordem natural
-        function loadBibleText() {
-            const passageKey = document.getElementById("biblePassageSelect").value;
-            const primaryVer = document.getElementById("primaryVersion").value;
-            const compareVer = document.getElementById("compareVersion").value;
-            const container = document.getElementById("bibleDisplayContainer");
-
-            const data = bibleDatabase[passageKey];
-            if (!data) {
-                container.innerHTML = `<p class="text-rose-500 text-center italic">Passagem não encontrada.</p>`;
+        function buscarTextoBiblico() {
+            const ref = document.getElementById('ref-busca').value;
+            const versao = document.getElementById('versao-biblia').value;
+            const container = document.getElementById('resultado-biblia');
+            
+            if(!ref) {
+                container.innerHTML = "Por favor, digite uma referência bíblica.";
                 return;
             }
 
-            let html = `<div class="font-bold text-indigo-900 border-b pb-1 mb-2">${data.ref} (${primaryVer}${compareVer ? ' vs ' + compareVer : ''})</div>`;
-            
-            // Exibição natural versículo por versículo com abreviação exata (ex: Gn 1.1)
-            const bookAbbr = passageKey.startsWith("Gn") ? "Gn" : "Lv";
-
-            data[primaryVer].forEach(item => {
-                const vNum = item.v;
-                const pText = item.text;
-                let compText = "";
-
-                if (compareVer && data[compareVer]) {
-                    const foundComp = data[compareVer].find(c => c.v === vNum);
-                    if (foundComp) compText = `<div class="text-xs text-emerald-700 mt-0.5"><strong>[${compareVer}]</strong> ${foundComp.text}</div>`;
-                }
-
-                html += `
-                    <div class="mb-2 pb-2 border-b border-slate-100 last:border-none">
-                        <span class="text-xs font-bold text-indigo-600 bg-indigo-50 px-1.5 py-0.5 rounded mr-1">${bookAbbr} ${vNum}</span>
-                        <span class="text-slate-800">${pText}</span>
-                        ${compText}
-                    </div>
-                `;
-            });
-
-            container.innerHTML = html;
+            container.innerHTML = `Buscando <strong>${ref}</strong> (${versao})...\n\n*(Nota: Os textos bíblicos padrão (${versao}) estão prontos para leitura e projeção na liturgia).*`;
         }
 
-        // Função de Preview e Impressão Formatada para PDF
-        function openPrintPreview() {
-            const includeBible = document.getElementById("includeBibleTexts").checked;
-            const includeHymns = document.getElementById("includeHymns").checked;
-            const previewContainer = document.getElementById("printPreviewContent");
-
-            let html = `
-                <div class="text-center border-b pb-4 mb-6">
-                    <h2 class="text-2xl font-bold uppercase tracking-wide text-indigo-900">Boletim Litúrgico</h2>
-                    <p class="text-sm text-slate-500">Ordem do Culto Oficial</p>
-                </div>
-            `;
-
-            liturgySections.filter(s => s.active).forEach(sec => {
-                html += `
-                    <div class="mb-6">
-                        <h3 class="text-base font-bold text-indigo-800 border-b border-indigo-200 pb-1 mb-2 uppercase">${sec.title}</h3>
-                        <ul class="space-y-2 pl-2">
-                `;
-
-                sec.items.forEach(item => {
-                    html += `
-                        <li class="text-sm">
-                            <span class="font-semibold text-slate-700">${item.type}:</span> 
-                            <span class="text-slate-900">${item.content}</span>
-                        </li>
-                    `;
-
-                    // Simulação opcional da inclusão dos textos bíblicos citados (ARA ou outra escolhida)
-                    if (includeBible && item.type.toLowerCase().includes("leitura")) {
-                        html += `
-                            <div class="my-2 p-3 bg-slate-50 border-l-4 border-indigo-500 text-xs text-slate-700 italic">
-                                <p class="font-bold text-indigo-900 not-italic mb-1">Texto Bíblico (${document.getElementById("primaryVersion").value}):</p>
-                                <p>"No princípio criou Deus os céus e a terra. A terra estava sem forma e vazia..." (Gn 1.1-2)</p>
-                            </div>
-                        `;
-                    }
-
-                    // Inclusão de Hinos/Músicas se marcado
-                    if (includeHymns && item.type.toLowerCase().includes("música")) {
-                        html += `
-                            <div class="my-2 p-2 bg-indigo-50/50 rounded text-xs text-indigo-900 italic pl-4">
-                                [Letra/Cifra disponível no repertório para o hino citando ${item.content}]
-                            </div>
-                        `;
-                    }
-                });
-
-                html += `</ul></div>`;
-            });
-
-            previewContainer.innerHTML = html;
-            document.getElementById("printModal").classList.remove("hidden");
-        }
-
-        function closePrintPreview() {
-            document.getElementById("printModal").classList.add("hidden");
-        }
-
-        // Inicialização
-        window.onload = function() {
-            renderLiturgy();
-            loadBibleText();
-        };
+        // Inicializa a tela
+        renderizarLiturgia();
     </script>
 </body>
 </html>
